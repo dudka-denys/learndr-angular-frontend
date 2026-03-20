@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+    <!-- Навигационная панель (фрагмент) -->
+    <nav th:fragment="navbar" class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="navbar-logo">Learndr</a>
+            <ul class="nav-links">
+                <li><a href="/training">Тренировка</a></li>
+                <li><a href="/vocabulary">Словарь</a></li>
+                <li class="nav-profile"><a href="/profile">Профиль</a></li>
+            </ul>
+        </div>
+    </nav>
+</body>
+</html>

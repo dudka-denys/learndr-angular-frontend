@@ -2,7 +2,8 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "cli": {
-    "packageManager": "npm"
+    "packageManager": "npm",
+    "analytics": "6d316e96-1b0a-49a6-b22d-8ae0d8fe7bae"
   },
   "newProjectRoot": "projects",
   "projects": {
@@ -27,15 +28,9 @@
             "styles": [
               "src/styles.css"
             ],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
             "security": {
               "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
-            }
-          },
+            }        },
           "configurations": {
             "production": {
               "budgets": [

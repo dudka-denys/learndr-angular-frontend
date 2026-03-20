@@ -1,0 +1,30 @@
+import { inject, Injectable } from '@angular/core';
+import { Word } from '../model/word';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { map, Observable } from 'rxjs';
+import { Page } from '../model/word-page';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class VocabularyApi {
+  private http = inject(HttpClient);
+  private baseUrl = 'http://localhost:8080/api/words';
+
+  getWords(
+    page: number = 0,
+    size: number = 30,
+    sort: string = "created_at,desc",
+    searchSubStr: string = "",
+    isLearned: boolean | null = null,
+  ): Observable<Page<Word[]>> {
+    let params = new HttpParams().appendAll({
+      page: page.toString(),
+      size: size.toString(),
+      sort: sort,
+      searchSubStr: searchSubStr,
+      isLearned: searchSubStr,
+    });
+    return this.http.get<Page<Word[]>>(this.baseUrl, { params });
+  }
+}
