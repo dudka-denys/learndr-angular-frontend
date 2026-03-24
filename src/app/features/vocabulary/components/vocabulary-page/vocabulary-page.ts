@@ -1,17 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
+import { WordList } from '../word-list/word-list';
+import { VocabularyApi } from '../../api/vocabulary.api';
 import { Word } from '../../model/word';
 import { Page } from '../../model/word-page';
-import { VocabularyApi } from '../../api/vocabulary.api';
 import { finalize } from 'rxjs';
-import { signal } from '@angular/core';
-
 @Component({
-  selector: 'app-get-words-page',
-  imports: [],
-  templateUrl: './get-words-page.html',
-  styleUrl: './get-words-page.css',
+  selector: 'app-vocabulary-page',
+  imports: [WordList],
+  templateUrl: './vocabulary-page.html',
+  styleUrl: './vocabulary-page.css',
 })
-export class GetWordsPage implements OnInit {
+export class VocabularyPage implements OnInit {
   isLoading = signal(false);
   errorMessage: string | null = null;
   words: Word[] = [];
@@ -34,7 +33,7 @@ export class GetWordsPage implements OnInit {
     this.vocabulary.getWords()
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (data: Page<Word[]>) => {
+        next: (data: Page<Word>) => {
           this.words = data.wordsDto;
           this.totalElements = data.totalElements;
           this.totalPages = data.totalPages;
@@ -46,6 +45,15 @@ export class GetWordsPage implements OnInit {
           console.error(err);
         }
       })
+  }
 
+  onDeleteWord(wordId: number): void {
+    this.vocabulary.deleteWord(wordId)
+      .pipe(finalize(() => this.loadWords()))
+      .subscribe();
+  }
+
+  onToggleLearned(wordId: number): void {
+    console.log('toggle learned', wordId);
   }
 }

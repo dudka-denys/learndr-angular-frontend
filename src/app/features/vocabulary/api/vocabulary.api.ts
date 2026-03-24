@@ -16,15 +16,18 @@ export class VocabularyApi {
     size: number = 30,
     sort: string = "created_at,desc",
     searchSubStr: string = "",
-    isLearned: boolean | null = null,
-  ): Observable<Page<Word[]>> {
+    isLearned: boolean | "" = "",
+  ): Observable<Page<Word>> {
     let params = new HttpParams().appendAll({
       page: page.toString(),
       size: size.toString(),
       sort: sort,
       searchSubStr: searchSubStr,
-      isLearned: searchSubStr,
+      isLearned: isLearned,
     });
-    return this.http.get<Page<Word[]>>(this.baseUrl, { params });
+    return this.http.get<Page<Word>>(this.baseUrl, { params });
   }
+  deleteWord(wordId: number): Observable<ArrayBuffer> {
+    return this.http.delete<ArrayBuffer>(this.baseUrl+ '/' + wordId);
+  }  
 }

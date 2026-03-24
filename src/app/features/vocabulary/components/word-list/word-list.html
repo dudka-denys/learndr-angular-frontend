@@ -1,0 +1,14 @@
+@if (words.length ===0){
+<p class="no-words">No words found.</p>
+} @else {
+<ul class="vocab-list">
+  @for (word of words; track word.id){
+  <li class="vocab-list-item">
+    <app-word-item 
+    [word]="word" 
+    (deleteWord)="onDeleteWord($event)" 
+    (toggleLearned)="onToggleLearned($event)" />
+  </li>
+  }
+</ul>
+}

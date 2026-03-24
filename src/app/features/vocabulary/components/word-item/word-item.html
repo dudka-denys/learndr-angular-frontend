@@ -1,0 +1,40 @@
+<div
+  class="word-card"
+  [ngClass]="{
+    'has-context': !!word.context?.trim(),
+    'learned': word.isLearned,
+    'not-learned': !word.isLearned
+  }">
+
+  <div class="word-data">
+    <p class="word-value">{{ word.word }}</p>
+    <p class="word-meaning">{{ word.meaning }}</p>
+  </div>
+
+  @if (word.context?.trim()) {
+  <div class="word-context">
+    <p class="word-context-value">{{word.context}}</p>
+  </div>
+  }
+  <div class="word-actions">
+    <button
+      class="word-status"
+      type="button"
+      (click)="onToggleLearned()"
+      [attr.aria-label]="word.isLearned ? 'Mark as not learned' : 'Mark as learned'"
+      [attr.title]="word.isLearned ? 'Mark as not learned' : 'Mark as learned'">
+      <img
+        class="word-status-icon"
+        [src]="word.isLearned ? '/img/learned.svg' : '/img/not_learned.svg'"
+        [alt]="word.isLearned ? 'Learned word' : 'Word in progress'">
+    </button>
+    <button
+      (click)="onDeleteWord()"
+      class="word-delete-button"
+      type="button"
+      [attr.aria-label]="'Delete ' + word.word"
+      [attr.title]="'Delete ' + word.word">
+      <img class="word-delete-icon" src="/img/delete.svg" alt="" aria-hidden="true">
+    </button>
+  </div>
+</div>

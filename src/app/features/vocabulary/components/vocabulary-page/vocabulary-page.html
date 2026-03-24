@@ -1,0 +1,15 @@
+@if(isLoading()){
+<div class="loading-words">
+  Loading words...
+</div>
+}
+
+@if(errorMessage){
+<div class="error-message">
+  {{errorMessage}}
+</div>
+}
+<app-word-list 
+[words]="words" 
+(deleteWord)="onDeleteWord($event)" 
+(toggleLearned)="onToggleLearned($event)" />

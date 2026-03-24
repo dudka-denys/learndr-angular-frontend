@@ -1,1 +1,71 @@
-<app-get-words-page />
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Vocabulary</title>
+  <link rel="stylesheet" th:href="@{/css/styles.css}">
+</head>
+
+<body>
+  <!-- insert nav panel -->
+  <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+  <div class="content">
+    <div class="vocab-header">
+      <div class="vocab-header-main">
+        <h1>Vocabulary</h1>
+        <label class="vocab-search-label" for="search-word">Find a word</label>
+        <input
+          type="text"
+          placeholder="Search by word or meaning..."
+          id="search-word"
+          class="vocab-search-input"
+          autocomplete="off">
+      </div>
+      <button id="open-add-word-modal" type="button" class="btn-add-word">+ Add New Word</button>
+    </div>
+    <div id="vocabList" class="vocab-list" th:data-words-api-url="@{/api/words}"
+      th:data-learned-icon-url="@{/img/learned.svg}" th:data-not-learned-icon-url="@{/img/not_learned.svg}"
+      th:data-delete-icon-url="@{/img/delete.svg}">
+      <div id="page-info"></div>
+      <div id="words-container">
+        <!-- render words -->
+        <app-vocabulary-page />
+      </div>
+      <div id="pagination">
+        <button id="prev-page" type="button">Previous</button>
+        <button id="next-page" type="button">Next</button>
+      </div>
+    </div>
+
+    <!-- Modal Popup -->
+    <div id="addWordModal" class="modal">
+      <div class="modal-content">
+        <span id="close-add-word-modal" class="close">&times;</span>
+        <h2>Add New Word</h2>
+        <form id="addWordForm" method="post">
+          <div class="form-group">
+            <label for="word">Word:</label>
+            <input type="text" id="word" name="word" required>
+          </div>
+          <div class="form-group">
+            <label for="meaning">Meaning:</label>
+            <input type="text" id="meaning" name="meaning" required>
+          </div>
+          <div class="form-group">
+            <label for="context">Сontext Sentence:</label>
+            <input type="text" id="context" name="context">
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-submit">Add Word</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <script th:src="@{/js/vocabulary/vocab-list.js}" defer></script>
+</body>
+
+</html>
+

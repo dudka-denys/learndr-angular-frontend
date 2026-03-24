@@ -1,0 +1,161 @@
+:host {
+  display: block;
+}
+
+.word-card {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 1.25rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.word-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.12);
+}
+
+.word-card.not-learned {
+  border-left: 5px solid #f59e0b;
+}
+
+.word-card.learned {
+  border-left: 5px solid #22c55e;
+}
+
+.word-card:not(.has-context) {
+  grid-template-columns: minmax(220px, 1fr) auto;
+}
+
+.word-data {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 0;
+}
+
+.word-value,
+.word-meaning,
+.word-context-value {
+  margin: 0;
+}
+
+.word-value {
+  color: #0f172a;
+  font-size: 1.4rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.word-meaning {
+  color: #64748b;
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+.word-context {
+  min-width: 0;
+  padding: 0.95rem 1rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  background: #f8fafc;
+}
+
+.word-context-value {
+  color: #334155;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.word-actions {
+  display: flex;
+  justify-self: end;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.word-status,
+.word-delete-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  appearance: none;
+}
+
+.word-status {
+  cursor: pointer;
+  background: #f8fafc;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.word-status:hover {
+  transform: translateY(-1px);
+  border-color: #93c5fd;
+  box-shadow: 0 10px 18px rgba(59, 130, 246, 0.18);
+}
+
+.word-delete-button {
+  cursor: pointer;
+  background: #fff1f2;
+  border-color: #fecdd3;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.word-delete-button:hover {
+  transform: translateY(-1px);
+  border-color: #fb7185;
+  box-shadow: 0 10px 18px rgba(244, 63, 94, 0.18);
+}
+
+.word-status:focus-visible,
+.word-delete-button:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+}
+
+.word-status-icon,
+.word-delete-icon {
+  width: 45px;
+  height: 45px;
+  display: block;
+  object-fit: contain;
+}
+
+@media (max-width: 900px) {
+  .word-card,
+  .word-card:not(.has-context) {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .word-context {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .word-card,
+  .word-card:not(.has-context) {
+    grid-template-columns: 1fr;
+  }
+
+  .word-actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .word-status,
+  .word-delete-button {
+    width: 48px;
+    height: 48px;
+  }
+}

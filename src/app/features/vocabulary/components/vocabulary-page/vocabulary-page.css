@@ -1,0 +1,23 @@
+:host {
+  display: block;
+}
+
+.loading-words,
+.error-message {
+  margin-bottom: 1rem;
+  padding: 1rem 1.25rem;
+  border-radius: 16px;
+  font-weight: 600;
+}
+
+.loading-words {
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.error-message {
+  border: 1px solid #fecdd3;
+  background: #fff1f2;
+  color: #be123c;
+}
