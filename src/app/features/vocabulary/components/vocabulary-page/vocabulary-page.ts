@@ -33,7 +33,7 @@ export class VocabularyPage implements OnInit {
     this.vocabulary.getWords()
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
-        next: (data: Page<Word>) => {
+        next: (data) => {
           this.words = data.wordsDto;
           this.totalElements = data.totalElements;
           this.totalPages = data.totalPages;
@@ -45,15 +45,28 @@ export class VocabularyPage implements OnInit {
           console.error(err);
         }
       })
+      
   }
 
   onDeleteWord(wordId: number): void {
     this.vocabulary.deleteWord(wordId)
       .pipe(finalize(() => this.loadWords()))
-      .subscribe();
+      .subscribe({
+        error: (err) => {
+          this.errorMessage = "error when deleting word";
+          console.error(err);
+        }
+      });
   }
 
-  onToggleLearned(wordId: number): void {
-    console.log('toggle learned', wordId);
+  onToggleLearned(payload: { id: number, isLearned: boolean }): void {
+    this.vocabulary.toggleLearned(payload.id, payload.isLearned)
+    .pipe(finalize(() =>  this.loadWords()))
+    .subscribe({
+      error: (err) => {
+        this.errorMessage = "error while updated learned status word";
+        console.error(err);
+      }
+    })
   }
 }

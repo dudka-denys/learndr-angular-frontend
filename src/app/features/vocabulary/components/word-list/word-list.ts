@@ -11,13 +11,13 @@ import { WordItem } from '../word-item/word-item';
 export class WordList {
   @Input() words: Word[]=[];
   @Output() deleteWord = new EventEmitter<number>();
-  @Output() toggleLearned = new EventEmitter<number>();
+  @Output() toggleLearned = new EventEmitter<{ id: number, isLearned: boolean }>();
 
   onDeleteWord(wordId:number): void {
     this.deleteWord.emit(wordId);
   }
 
-  onToggleLearned(wordId: number): void {
-    this.toggleLearned.emit(wordId);
+  onToggleLearned(payload: { id: number, isLearned: boolean }): void {
+    this.toggleLearned.emit(payload);
   }  
 }

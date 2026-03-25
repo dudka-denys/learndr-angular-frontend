@@ -27,7 +27,37 @@ export class VocabularyApi {
     });
     return this.http.get<Page<Word>>(this.baseUrl, { params });
   }
-  deleteWord(wordId: number): Observable<ArrayBuffer> {
-    return this.http.delete<ArrayBuffer>(this.baseUrl+ '/' + wordId);
-  }  
+
+  deleteWord(wordId: number): Observable<void> {
+    return this.http.delete<void>(this.baseUrl + '/' + wordId);
+  }
+
+  toggleLearned(
+    wordId: number,
+    isLearned: boolean | "" = ""
+  ): Observable<Word> {
+    let params = new HttpParams().appendAll(
+      {
+        isLearned: isLearned,
+      }
+    );
+    return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, { isLearned: isLearned });
+  }
+  // updateWord(
+  //   wordId: number,
+  //   word: string = "",
+  //   meaning: string = "",
+  //   context: string = "",
+  //   isLearned: boolean | "" = ""
+  // ): Observable<Word> {
+  //   let params = new HttpParams().appendAll(
+  //     {
+  //       word: word,
+  //       meaning: meaning,
+  //       context: context,
+  //       isLearned: isLearned,
+  //     }
+  //   );
+  //   return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, { params });
+  // }
 }
