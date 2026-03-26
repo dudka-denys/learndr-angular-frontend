@@ -1,0 +1,17 @@
+@if(isEditModalOpen) {
+<div class="modal-backdrop" (click)="onBackdropClick()">
+  <div class="modal" (click)="onModalClick($event)">
+    <div class="modal-header">
+      <h2>Edit Word</h2>
+      <button type="button" (click)="onClose()" class="close-btn">×</button>
+    </div>
+
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group">
+      <div class="form-group">
+        <label for="word">Word</label>
+        <input type="text">
+      </div>
+    </form>
+  </div>
+</div>
+}

@@ -4,7 +4,7 @@
     'has-context': !!word.context?.trim(),
     'learned': word.isLearned,
     'not-learned': !word.isLearned
-  }">
+  }"(click)="onOpenWord(word)">
 
   <div class="word-data">
     <p class="word-value">{{ word.word }}</p>

@@ -12,4 +12,12 @@
 <app-word-list 
 [words]="words" 
 (deleteWord)="onDeleteWord($event)" 
-(toggleLearned)="onToggleLearned($event)" />
+(toggleLearned)="onToggleLearned($event)"
+(openWord)="onOpenWord($event)" />
+
+<app-edit-word-modal
+[word]="selectedWord"
+[isEditModalOpen]="isEditModalOpen"
+[isSavingWord]="isSavingWord"
+(closeWordModal)="closeWordModal($event)"
+(updateWord)="updateWord($event)"></app-edit-word-modal>

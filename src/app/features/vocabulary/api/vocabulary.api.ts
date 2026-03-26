@@ -25,7 +25,8 @@ export class VocabularyApi {
       searchSubStr: searchSubStr,
       isLearned: isLearned,
     });
-    return this.http.get<Page<Word>>(this.baseUrl, { params });
+    return this.http.get<Page<Word>>(this.baseUrl, { params })
+      .pipe();
   }
 
   deleteWord(wordId: number): Observable<void> {
@@ -43,21 +44,22 @@ export class VocabularyApi {
     );
     return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, { isLearned: isLearned });
   }
-  // updateWord(
-  //   wordId: number,
-  //   word: string = "",
-  //   meaning: string = "",
-  //   context: string = "",
-  //   isLearned: boolean | "" = ""
-  // ): Observable<Word> {
-  //   let params = new HttpParams().appendAll(
-  //     {
-  //       word: word,
-  //       meaning: meaning,
-  //       context: context,
-  //       isLearned: isLearned,
-  //     }
-  //   );
-  //   return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, { params });
-  // }
+
+  updateWord(
+    wordId: number,
+    word: string = "",
+    meaning: string = "",
+    context: string | null = "",
+    isLearned: boolean | "" = ""
+  ): Observable<Word> {
+    let params = new HttpParams().appendAll(
+      {
+        word: word,
+        meaning: meaning,
+        isLearned: isLearned,
+      }
+    );
+    if (context !== null) params.set('context', context);
+    return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, { params });
+  }
 }

@@ -10,16 +10,17 @@ import { NgClass } from "@angular/common";
 })
 export class WordItem {
   @Input({ required: true }) word!: Word;
-
   @Output() deleteWord = new EventEmitter<number>();
   @Output() toggleLearned = new EventEmitter<{ id: number, isLearned: boolean }>();
+  @Output() openWord = new EventEmitter<Word>();
 
   onDeleteWord(): void {
     this.deleteWord.emit(this.word.id);
   }
   onToggleLearned(): void {
-        console.log('wordId=', this.word.id, typeof this.word.id);
-
     this.toggleLearned.emit({ id: this.word.id, isLearned: !this.word.isLearned });
+  }
+  onOpenWord(word:Word): void {
+    this.openWord.emit(word);
   }
 }

@@ -12,6 +12,7 @@ export class WordList {
   @Input() words: Word[]=[];
   @Output() deleteWord = new EventEmitter<number>();
   @Output() toggleLearned = new EventEmitter<{ id: number, isLearned: boolean }>();
+  @Output() openWord = new EventEmitter<Word>();
 
   onDeleteWord(wordId:number): void {
     this.deleteWord.emit(wordId);
@@ -20,4 +21,7 @@ export class WordList {
   onToggleLearned(payload: { id: number, isLearned: boolean }): void {
     this.toggleLearned.emit(payload);
   }  
+  onOpenWord(word:Word):void {
+    this.openWord.emit(word);
+  }
 }
