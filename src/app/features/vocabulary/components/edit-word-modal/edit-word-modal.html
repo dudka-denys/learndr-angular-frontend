@@ -3,13 +3,34 @@
   <div class="modal" (click)="onModalClick($event)">
     <div class="modal-header">
       <h2>Edit Word</h2>
-      <button type="button" (click)="onClose()" class="close-btn">×</button>
+      <button type="button" (click)="onSubmit()" class="close-btn">❌</button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group">
       <div class="form-group">
         <label for="word">Word</label>
-        <input type="text">
+        <input type="text" id="word" formControlName="word">
+        @if (form.get('word')?.invalid && form.get('word')?.touched) {
+        <small class="error">Word is required</small>
+        }
+      </div>
+      <div class="form-group">
+        <label for="meaning">Word</label>
+        <input type="text" id="meaning" formControlName="meaning">
+        @if (form.get('meaning')?.invalid && form.get('meaning')?.touched) {
+        <small class="error">Meaning is required</small>
+        }
+      </div>
+      <div class="form-group">
+        <label for="context">Context</label>
+        <textarea formControlName="context" id="context" rows="2"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button type="button" (click)="onClose()">Cancel</button>
+        <button type="submit" [disabled]="isSavingWord">
+          {{ isSavingWord? 'Saving...' : 'Save'}}
+        </button>
       </div>
     </form>
   </div>
