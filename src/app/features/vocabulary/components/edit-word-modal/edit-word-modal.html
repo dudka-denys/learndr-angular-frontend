@@ -3,7 +3,7 @@
   <div class="modal" (click)="onModalClick($event)">
     <div class="modal-header">
       <h2>Edit Word</h2>
-      <button type="button" (click)="onSubmit()" class="close-btn">❌</button>
+      <button type="button" (click)="onClose()" class="close-btn">❌</button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group">
@@ -15,7 +15,7 @@
         }
       </div>
       <div class="form-group">
-        <label for="meaning">Word</label>
+        <label for="meaning">Meaning</label>
         <input type="text" id="meaning" formControlName="meaning">
         @if (form.get('meaning')?.invalid && form.get('meaning')?.touched) {
         <small class="error">Meaning is required</small>

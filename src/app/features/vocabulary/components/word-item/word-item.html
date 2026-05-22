@@ -20,7 +20,7 @@
     <button
       class="word-status"
       type="button"
-      (click)="onToggleLearned()"
+      (click)="onToggleLearned($event)"
       [attr.aria-label]="word.isLearned ? 'Mark as not learned' : 'Mark as learned'"
       [attr.title]="word.isLearned ? 'Mark as not learned' : 'Mark as learned'">
       <img
@@ -29,7 +29,7 @@
         [alt]="word.isLearned ? 'Learned word' : 'Word in progress'">
     </button>
     <button
-      (click)="onDeleteWord()"
+      (click)="onDeleteWord($event)"
       class="word-delete-button"
       type="button"
       [attr.aria-label]="'Delete ' + word.word"

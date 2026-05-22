@@ -14,10 +14,12 @@ export class WordItem {
   @Output() toggleLearned = new EventEmitter<{ id: number, isLearned: boolean }>();
   @Output() openWord = new EventEmitter<Word>();
 
-  onDeleteWord(): void {
+  onDeleteWord(event: Event): void {
+    event.stopPropagation();
     this.deleteWord.emit(this.word.id);
   }
-  onToggleLearned(): void {
+  onToggleLearned(event: Event): void {
+    event.stopPropagation();
     this.toggleLearned.emit({ id: this.word.id, isLearned: !this.word.isLearned });
   }
   onOpenWord(word:Word): void {

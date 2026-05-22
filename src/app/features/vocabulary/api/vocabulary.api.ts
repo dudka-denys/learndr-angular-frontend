@@ -50,16 +50,13 @@ export class VocabularyApi {
     word: string = "",
     meaning: string = "",
     context: string | null = "",
-    isLearned: boolean | "" = ""
   ): Observable<Word> {
-    let params = new HttpParams().appendAll(
+    let params =
       {
         word: word,
         meaning: meaning,
-        isLearned: isLearned,
-      }
-    );
-    if (context !== null) params.set('context', context);
-    return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, { params });
+        context:context,
+      };
+    return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, params );
   }
 }

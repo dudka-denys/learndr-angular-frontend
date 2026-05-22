@@ -15,45 +15,55 @@ export class EditWordModal implements OnChanges {
   @Input() isEditModalOpen: boolean = false;
   @Input() isSavingWord: boolean = false;
 
-  @Output() closeWordModal = new EventEmitter<UpdateWordRequest>();
+  @Output() closeWordModal = new EventEmitter<void>();
   @Output() updateWord = new EventEmitter<UpdateWordRequest>();
 
   form: FormGroup;
   constructor(private fb: FormBuilder) {
     this.form = this.fb.group({
-      word: [this.word?.word, [Validators.required, Validators.maxLength(255)]],
-      meaning: [this.word?.meaning, [Validators.required, Validators.maxLength(255)]],
+      word: ['', [Validators.required, Validators.maxLength(255)]],
+      meaning: ['', [Validators.required, Validators.maxLength(255)]],
       context: ['']
     });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log("Asd");
+    if (changes['word'] && this.word) {
+      this.form.patchValue({
+        word: this.word.word,
+        meaning: this.word.meaning,
+        context: this.word.context,
+      })
+    }
   }
 
   onBackdropClick(): void {
-    this.onClose();
+    this.onSubmit();
   }
   onClose(): void {
-    this.onSubmit
+    this.closeWordModal.emit();
   }
   onModalClick(event: Event): void {
     event.stopPropagation();
   }
 
   onSubmit(): void {
-    if(this.form.invalid) {
-      // this.form.markAllAsTouched();
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
+    if (!this.form.dirty) {
+      this.onClose();
       return;
     }
     const raw = this.form.value;
 
     if (!this.word) return;
     let updateReq = new UpdateWordRequest(this.word?.id,
-      this.word?.word,
-      this.word?.meaning,
-      this.word?.context
+      raw.word,
+      raw.meaning,
+      raw.context
     )
-      this.updateWord.emit(updateReq);
+    this.updateWord.emit(updateReq);
   }
 }

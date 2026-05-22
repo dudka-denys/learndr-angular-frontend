@@ -77,7 +77,7 @@ export class VocabularyPage implements OnInit {
       });
   }
 
-  closeWordModal(updateReq: UpdateWordRequest): void {
+  closeWordModal(): void {
     this.selectedWord = null;
     this.isEditModalOpen = false;
   }
@@ -86,7 +86,18 @@ export class VocabularyPage implements OnInit {
     this.isEditModalOpen = true;
   }
   updateWord(updateReq: UpdateWordRequest): void {
-    // this.vocabulary.updateWord(updateReq)
-    console.log("update!");
+    this.vocabulary.updateWord(updateReq.wordId,
+      updateReq.word,
+      updateReq.meaning,
+      updateReq.context,
+    )
+    // .pipe(finalize(()=> this.reloadWord()))
+    .pipe(finalize(()=> this.loadWords()))
+    .subscribe({
+      error: (err)=> {
+        
+      }
+    });
+
   }
 }
