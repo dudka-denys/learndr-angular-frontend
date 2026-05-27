@@ -28,12 +28,20 @@ export class WordFormModal implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['word'] && this.word) {
-      this.form.patchValue({
-        word: this.word.word,
-        meaning: this.word.meaning,
-        context: this.word.context,
-      })
+    if (changes['word']) {
+      if (this.word)
+        this.form.patchValue({
+          word: this.word.word,
+          meaning: this.word.meaning,
+          context: this.word.context,
+        });
+        else {
+          this.form.patchValue({
+          word: '',
+          meaning: '',
+          context: '',
+        });
+        }
     }
   }
 

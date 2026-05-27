@@ -7,9 +7,10 @@ import { finalize } from 'rxjs';
 import { WordFormModal } from '../word-form-modal/word-form-modal';
 import { UpdateWordRequest } from '../../model/request/update-word-request';
 import { Pagination } from '../pagination/pagination';
+import { VocabHeader } from '../vocab-header/vocab-header';
 @Component({
   selector: 'app-vocabulary-page',
-  imports: [WordList, WordFormModal, Pagination],
+  imports: [WordList, WordFormModal, Pagination, VocabHeader],
   templateUrl: './vocabulary-page.html',
   styleUrl: './vocabulary-page.css',
 })
@@ -25,7 +26,7 @@ export class VocabularyPage implements OnInit {
   page: number = 0;
 
   selectedWord: Word | null = null;
-  isEditModalOpen = false;
+  isWordFormModalOpen = false;
   isSavingWord = false;
 
   constructor(private vocabulary: VocabularyApi) { }
@@ -55,7 +56,12 @@ export class VocabularyPage implements OnInit {
         }
       });
   }
-
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ CREATE WORD ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  openCreateWordModal(): void {
+    this.selectedWord = null;
+    this.isWordFormModalOpen = true;
+  }
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ CREATE WORD ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH BUTTONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   onDeleteWord(wordId: number): void {
     this.vocabulary.deleteWord(wordId)
@@ -82,11 +88,11 @@ export class VocabularyPage implements OnInit {
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH MODAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   closeWordModal(): void {
     this.selectedWord = null;
-    this.isEditModalOpen = false;
+    this.isWordFormModalOpen = false;
   }
   onOpenWord(word: Word): void {
     this.selectedWord = word;
-    this.isEditModalOpen = true;
+    this.isWordFormModalOpen = true;
   }
   updateWord(updateReq: UpdateWordRequest): void {
     this.vocabulary.updateWord(updateReq.wordId,
@@ -101,6 +107,8 @@ export class VocabularyPage implements OnInit {
           console.error(err);
         }
       });
+      this.selectedWord = null;
+      this.isWordFormModalOpen = false;
   }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH MODAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ PAGINATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
