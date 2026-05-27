@@ -4,11 +4,12 @@ import { VocabularyApi } from '../../api/vocabulary.api';
 import { Word } from '../../model/word';
 import { Page } from '../../model/word-page';
 import { finalize } from 'rxjs';
-import { EditWordModal } from '../edit-word-modal/edit-word-modal';
+import { WordFormModal } from '../word-form-modal/word-form-modal';
 import { UpdateWordRequest } from '../../model/request/update-word-request';
+import { Pagination } from '../pagination/pagination';
 @Component({
   selector: 'app-vocabulary-page',
-  imports: [WordList, EditWordModal],
+  imports: [WordList, WordFormModal, Pagination],
   templateUrl: './vocabulary-page.html',
   styleUrl: './vocabulary-page.css',
 })
@@ -37,7 +38,7 @@ export class VocabularyPage implements OnInit {
     this.isLoading.set(true);
     this.errorMessage = null;
 
-    this.vocabulary.getWords()
+    this.vocabulary.getWords(this.page)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (data: Page<Word>) => {
@@ -55,6 +56,7 @@ export class VocabularyPage implements OnInit {
       });
   }
 
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH BUTTONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   onDeleteWord(wordId: number): void {
     this.vocabulary.deleteWord(wordId)
       .pipe(finalize(() => this.loadWords()))
@@ -76,7 +78,8 @@ export class VocabularyPage implements OnInit {
         }
       });
   }
-
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH BUTTONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH MODAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   closeWordModal(): void {
     this.selectedWord = null;
     this.isEditModalOpen = false;
@@ -91,13 +94,27 @@ export class VocabularyPage implements OnInit {
       updateReq.meaning,
       updateReq.context,
     )
-    // .pipe(finalize(()=> this.reloadWord()))
-    .pipe(finalize(()=> this.loadWords()))
-    .subscribe({
-      error: (err)=> {
-        
-      }
-    });
-
+      .pipe(finalize(() => this.loadWords()))
+      .subscribe({
+        error: (err) => {
+          this.errorMessage = "error while updating content of word" + updateReq.word;
+          console.error(err);
+        }
+      });
   }
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH MODAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ PAGINATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  nextPage(): void {
+    if (this.hasNext) {
+      this.page++;
+      this.loadWords();
+    }
+  }
+  prevPage(): void {
+    if (this.hasPrevious) {
+      this.page--;
+      this.loadWords();
+    }
+  }
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ PAGINATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 }

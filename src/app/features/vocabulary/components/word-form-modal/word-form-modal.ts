@@ -5,12 +5,12 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-edit-word-modal',
+  selector: 'app-word-form-modal',
   imports: [CommonModule, ReactiveFormsModule],
-  templateUrl: './edit-word-modal.html',
-  styleUrl: './edit-word-modal.css',
+  templateUrl: './word-form-modal.html',
+  styleUrl: './word-form-modal.css',
 })
-export class EditWordModal implements OnChanges {
+export class WordFormModal implements OnChanges {
   @Input() word: Word | null = null;
   @Input() isEditModalOpen: boolean = false;
   @Input() isSavingWord: boolean = false;

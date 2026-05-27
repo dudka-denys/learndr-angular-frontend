@@ -15,9 +15,15 @@
 (toggleLearned)="onToggleLearned($event)"
 (openWord)="onOpenWord($event)" />
 
-<app-edit-word-modal
+<app-word-form-modal
 [word]="selectedWord"
 [isEditModalOpen]="isEditModalOpen"
 [isSavingWord]="isSavingWord"
 (closeWordModal)="closeWordModal()"
-(updateWord)="updateWord($event)"></app-edit-word-modal>
+(updateWord)="updateWord($event)"></app-word-form-modal>
+
+<app-pagination
+(nextPage)="nextPage()"
+(prevPage)="prevPage()"
+[hasNext] = "hasNext"
+[hasPrevious] = "hasPrevious"></app-pagination>
