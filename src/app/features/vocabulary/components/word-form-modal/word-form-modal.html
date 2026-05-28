@@ -1,8 +1,13 @@
-@if(isEditModalOpen) {
+@if(isWordFormModalOpen) {
 <div class="modal-backdrop" (click)="onBackdropClick()">
   <div class="modal" (click)="onModalClick($event)">
     <div class="modal-header">
-      <h2>Edit Word</h2>
+      @if(mode=='edit'){
+        <h2>Edit Word</h2>
+      }
+      @if(mode=='create'){
+      <h2>Create Word</h2>
+    }
       <button type="button" (click)="onClose()" class="close-btn">❌</button>
     </div>
 

@@ -29,6 +29,17 @@ export class VocabularyApi {
       .pipe();
   }
 
+  createWord(
+    word: string,
+    meaning: string,
+    context: string | null,
+  ):Observable<Word> {
+    return this.http.post<Word>(this.baseUrl, {
+      word: word,
+      meaning: meaning,
+      context: context,})
+  }
+
   deleteWord(wordId: number): Observable<void> {
     return this.http.delete<void>(this.baseUrl + '/' + wordId);
   }
@@ -52,11 +63,11 @@ export class VocabularyApi {
     context: string | null = "",
   ): Observable<Word> {
     let params =
-      {
-        word: word,
-        meaning: meaning,
-        context:context,
-      };
-    return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, params );
+    {
+      word: word,
+      meaning: meaning,
+      context: context,
+    };
+    return this.http.patch<Word>(`${this.baseUrl}/${wordId}`, params);
   }
 }

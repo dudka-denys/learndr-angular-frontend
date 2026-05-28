@@ -8,6 +8,7 @@ import { WordFormModal } from '../word-form-modal/word-form-modal';
 import { UpdateWordRequest } from '../../model/request/update-word-request';
 import { Pagination } from '../pagination/pagination';
 import { VocabHeader } from '../vocab-header/vocab-header';
+import { CreateWordRequestDto } from '../../model/dto/create-word-request-dto';
 @Component({
   selector: 'app-vocabulary-page',
   imports: [WordList, WordFormModal, Pagination, VocabHeader],
@@ -28,6 +29,7 @@ export class VocabularyPage implements OnInit {
   selectedWord: Word | null = null;
   isWordFormModalOpen = false;
   isSavingWord = false;
+  wordModalMode: 'create' | 'edit' = 'create';
 
   constructor(private vocabulary: VocabularyApi) { }
 
@@ -60,6 +62,17 @@ export class VocabularyPage implements OnInit {
   openCreateWordModal(): void {
     this.selectedWord = null;
     this.isWordFormModalOpen = true;
+    this.wordModalMode = 'create';
+  }
+  createWord(newWord: CreateWordRequestDto): void {
+    this.vocabulary.createWord(newWord.word, newWord.meaning, newWord.context)
+    .pipe(finalize(()=> this.loadWords()))
+    .subscribe({
+      error: (err) => {
+        this.errorMessage="error when creating word";
+        console.error(err);
+      }
+    });
   }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ CREATE WORD ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH BUTTONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -91,6 +104,7 @@ export class VocabularyPage implements OnInit {
     this.isWordFormModalOpen = false;
   }
   onOpenWord(word: Word): void {
+    this.wordModalMode = 'edit';
     this.selectedWord = word;
     this.isWordFormModalOpen = true;
   }
@@ -107,8 +121,6 @@ export class VocabularyPage implements OnInit {
           console.error(err);
         }
       });
-      this.selectedWord = null;
-      this.isWordFormModalOpen = false;
   }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH MODAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ PAGINATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

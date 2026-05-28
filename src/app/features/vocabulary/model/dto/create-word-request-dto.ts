@@ -1,14 +1,14 @@
 export class CreateWordRequestDto {
-  word!: string;
-  meaning!: string;
-  context!: string;
-  сonstructor(data: {
-    word: string;
-    meaning: string;
-    context: string;
-  }) {
-    this.word = data.word;
-    this.meaning = data.meaning;
-    this.context = data.context;
+  word: string;
+  meaning: string;
+  context: string;
+  constructor(
+    word: string,
+    meaning: string,
+    context: string,
+  ) {
+    this.word = word;
+    this.meaning = meaning;
+    this.context = context;
   }
 }

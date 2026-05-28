@@ -3,6 +3,7 @@ import { Word } from '../../model/word';
 import { UpdateWordRequest } from '../../model/request/update-word-request';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { CreateWordRequestDto } from '../../model/dto/create-word-request-dto';
 
 @Component({
   selector: 'app-word-form-modal',
@@ -12,11 +13,13 @@ import { CommonModule } from '@angular/common';
 })
 export class WordFormModal implements OnChanges {
   @Input() word: Word | null = null;
-  @Input() isEditModalOpen: boolean = false;
+  @Input() isWordFormModalOpen: boolean = false;
   @Input() isSavingWord: boolean = false;
+  @Input() mode: 'create' | 'edit' = 'create';
 
   @Output() closeWordModal = new EventEmitter<void>();
   @Output() updateWord = new EventEmitter<UpdateWordRequest>();
+  @Output() createWord = new EventEmitter<CreateWordRequestDto>();
 
   form: FormGroup;
   constructor(private fb: FormBuilder) {
@@ -28,27 +31,24 @@ export class WordFormModal implements OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes['word']) {
-      if (this.word)
+    if (this.mode == 'edit')
+      if (changes['word'] && this.word) {
         this.form.patchValue({
-          word: this.word.word,
-          meaning: this.word.meaning,
-          context: this.word.context,
+          word: this.word ? this.word.word : '',
+          meaning: this.word ? this.word.meaning : '',
+          context: this.word ? this.word.context : '',
         });
-        else {
-          this.form.patchValue({
-          word: '',
-          meaning: '',
-          context: '',
-        });
-        }
-    }
+      }
   }
 
   onBackdropClick(): void {
-    this.onSubmit();
+    if (this.mode == 'edit')
+      this.onSubmit();
+    else
+      this.onClose();
   }
   onClose(): void {
+    this.form.reset();
     this.closeWordModal.emit();
   }
   onModalClick(event: Event): void {
@@ -66,12 +66,23 @@ export class WordFormModal implements OnChanges {
     }
     const raw = this.form.value;
 
-    if (!this.word) return;
-    let updateReq = new UpdateWordRequest(this.word?.id,
-      raw.word,
-      raw.meaning,
-      raw.context
-    )
-    this.updateWord.emit(updateReq);
+    if (this.mode == 'edit') {
+      if (!this.word) return;
+      let updateReq = new UpdateWordRequest(this.word?.id,
+        raw.word,
+        raw.meaning,
+        raw.context
+      )
+      this.updateWord.emit(updateReq);
+    }
+    else {
+      this.createWord.emit(new CreateWordRequestDto(
+        raw.word,
+        raw.meaning,
+        raw.context,
+      ))
+    }
+    this.form.reset();
+    this.onClose();
   }
 }

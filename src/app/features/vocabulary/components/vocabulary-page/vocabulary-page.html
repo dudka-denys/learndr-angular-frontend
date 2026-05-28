@@ -20,10 +20,12 @@
 
 <app-word-form-modal
 [word]="selectedWord"
-[isEditModalOpen]="isWordFormModalOpen"
+[isWordFormModalOpen]="isWordFormModalOpen"
+[mode]="wordModalMode"
 [isSavingWord]="isSavingWord"
 (closeWordModal)="closeWordModal()"
-(updateWord)="updateWord($event)"></app-word-form-modal>
+(updateWord)="updateWord($event)"
+(createWord)="createWord($event)"></app-word-form-modal>
 
 <app-pagination
 (nextPage)="nextPage()"
