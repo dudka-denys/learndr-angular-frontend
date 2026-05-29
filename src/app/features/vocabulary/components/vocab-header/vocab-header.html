@@ -2,7 +2,37 @@
   <div class="vocab-header-main">
     <h1>Vocabulary</h1>
     <label class="vocab-search-label" for="search-word">Find a word</label>
-    <input type="text" placeholder="Search by word or meaning..." class="vocab-search-input" autocomplete="off">
+    <input id="search-word" (input)="onSearchInput($event)" type="text" placeholder="Search by word or meaning..."
+      class="vocab-search-input" autocomplete="off">
+  </div>
+  <div class="learned-filter" role="group" aria-label="Filter words by learning status">
+    <button
+      class="learned-filter-option"
+      [class.is-active]="learnedFilter === null"
+      type="button"
+      (click)="onLearnedFilter(null)">
+      All
+    </button>
+    <button
+      class="learned-filter-option"
+      [class.is-active]="learnedFilter === true"
+      type="button"
+      (click)="onLearnedFilter(true)">
+      <span class="learned-filter-icon-box" aria-hidden="true">
+        <img class="learned-filter-icon" src="/img/learned.svg" alt="">
+      </span>
+      Learned
+    </button>
+    <button
+      class="learned-filter-option"
+      [class.is-active]="learnedFilter === false"
+      type="button"
+      (click)="onLearnedFilter(false)">
+      <span class="learned-filter-icon-box" aria-hidden="true">
+        <img class="learned-filter-icon" src="/img/not_learned.svg" alt="">
+      </span>
+      Not learned
+    </button>
   </div>
   <button type="button" class="btn-add-word" (click)="CreateWord()">+ Add New Word</button>
 </div>

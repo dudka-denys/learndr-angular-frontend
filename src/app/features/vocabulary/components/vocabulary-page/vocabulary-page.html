@@ -1,4 +1,7 @@
-<app-vocab-header (openCreateWordModal)="openCreateWordModal()">
+<app-vocab-header 
+(openCreateWordModal)="openCreateWordModal()"
+(searchSubStrChange)="getSearchSubStrWords($event)"
+(isLearnedFilterChange)="isLearnedFilterChange($event)">
 
 </app-vocab-header>
 @if(isLoading()){

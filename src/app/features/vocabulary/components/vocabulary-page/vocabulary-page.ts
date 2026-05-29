@@ -26,6 +26,9 @@ export class VocabularyPage implements OnInit {
   hasPrevious: boolean = false;
   page: number = 0;
 
+  searchSubStr: string | null = null;
+  isLearnedFilter: boolean | null = null;
+
   selectedWord: Word | null = null;
   isWordFormModalOpen = false;
   isSavingWord = false;
@@ -41,7 +44,7 @@ export class VocabularyPage implements OnInit {
     this.isLoading.set(true);
     this.errorMessage = null;
 
-    this.vocabulary.getWords(this.page)
+    this.vocabulary.getWords(this.page, undefined, undefined, this.searchSubStr, this.isLearnedFilter)
       .pipe(finalize(() => this.isLoading.set(false)))
       .subscribe({
         next: (data: Page<Word>) => {
@@ -58,6 +61,18 @@ export class VocabularyPage implements OnInit {
         }
       });
   }
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ GET WORDS WITH SEARCH SUBSTRING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  getSearchSubStrWords(searchSubStr: string): void {
+    this.searchSubStr = searchSubStr;
+    this.page = 0;
+    this.loadWords();
+  }
+  // ~~~~~~~~~~~~~~~~~~~~~~~~ GET WORDS WITH SEARCH SUBSTRING ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  isLearnedFilterChange(isLearned: boolean | null): void {
+    this.isLearnedFilter = isLearned;
+    this.page = 0;
+    this.loadWords();
+  }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ CREATE WORD ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   openCreateWordModal(): void {
     this.selectedWord = null;
@@ -66,13 +81,13 @@ export class VocabularyPage implements OnInit {
   }
   createWord(newWord: CreateWordRequestDto): void {
     this.vocabulary.createWord(newWord.word, newWord.meaning, newWord.context)
-    .pipe(finalize(()=> this.loadWords()))
-    .subscribe({
-      error: (err) => {
-        this.errorMessage="error when creating word";
-        console.error(err);
-      }
-    });
+      .pipe(finalize(() => this.loadWords()))
+      .subscribe({
+        error: (err) => {
+          this.errorMessage = "error when creating word";
+          console.error(err);
+        }
+      });
   }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ CREATE WORD ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH BUTTONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

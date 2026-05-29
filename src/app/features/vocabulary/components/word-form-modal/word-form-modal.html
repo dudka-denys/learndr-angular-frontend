@@ -8,7 +8,7 @@
       @if(mode=='create'){
       <h2>Create Word</h2>
     }
-      <button type="button" (click)="onClose()" class="close-btn">❌</button>
+      <button type="button" (click)="onClose()" class="close-btn" aria-label="Close modal">×</button>
     </div>
 
     <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-group">
@@ -32,8 +32,8 @@
       </div>
 
       <div class="modal-actions">
-        <button type="button" (click)="onClose()">Cancel</button>
-        <button type="submit" [disabled]="isSavingWord">
+        <button type="button" (click)="onClose()" class="modal-button modal-button-secondary">Cancel</button>
+        <button type="submit" [disabled]="isSavingWord" class="modal-button modal-button-primary">
           {{ isSavingWord? 'Saving...' : 'Save'}}
         </button>
       </div>

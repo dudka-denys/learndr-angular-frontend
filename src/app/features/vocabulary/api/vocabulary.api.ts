@@ -15,16 +15,15 @@ export class VocabularyApi {
     page: number = 0,
     size: number = 30,
     sort: string = "created_at,desc",
-    searchSubStr: string = "",
-    isLearned: boolean | "" = "",
+    searchSubStr: string | null = null,
+    isLearned: boolean | null = null,
   ): Observable<Page<Word>> {
-    let params = new HttpParams().appendAll({
-      page: page.toString(),
-      size: size.toString(),
-      sort: sort,
-      searchSubStr: searchSubStr,
-      isLearned: isLearned,
-    });
+    let params = new HttpParams()
+      .set('page', page)
+      .set('size', size)
+      .set('sort', sort)
+      .set('isLearned', isLearned === null ? "" : isLearned)
+      .set('searchSubStr', searchSubStr === null ? "" : searchSubStr)
     return this.http.get<Page<Word>>(this.baseUrl, { params })
       .pipe();
   }
@@ -33,11 +32,12 @@ export class VocabularyApi {
     word: string,
     meaning: string,
     context: string | null,
-  ):Observable<Word> {
+  ): Observable<Word> {
     return this.http.post<Word>(this.baseUrl, {
       word: word,
       meaning: meaning,
-      context: context,})
+      context: context,
+    })
   }
 
   deleteWord(wordId: number): Observable<void> {
