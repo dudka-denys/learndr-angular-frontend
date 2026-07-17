@@ -1,31 +1,7 @@
-<!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
-<head>
-  <meta charset="UTF-8">
-  <title>Vocabulary</title>
-  <link rel="stylesheet" th:href="@{/css/styles.css}">
-</head>
-
-<body>
   <!-- insert nav panel -->
   <!-- <div th:replace="~{fragments/navbar :: navbar}"></div> -->
 
   <div class="content">
-    
-    <div id="vocabList" class="vocab-list" th:data-words-api-url="@{/api/words}"
-      th:data-learned-icon-url="@{/img/learned.svg}" th:data-not-learned-icon-url="@{/img/not_learned.svg}"
-      th:data-delete-icon-url="@{/img/delete.svg}">
-      <div id="page-info"></div>
-      <div id="words-container">
-        <!-- render words -->
-        <app-vocabulary-page />
-      </div>
-      
-    </div>
-
+    <!-- render words -->
+    <app-vocabulary-page />
   </div>
-</body>
-
-</html>
-

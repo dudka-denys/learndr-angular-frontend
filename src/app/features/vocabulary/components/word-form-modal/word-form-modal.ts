@@ -68,21 +68,22 @@ export class WordFormModal implements OnChanges {
 
     if (this.mode == 'edit') {
       if (!this.word) return;
-      let updateReq = new UpdateWordRequest(this.word?.id,
-        raw.word,
-        raw.meaning,
-        raw.context
-      )
-      this.updateWord.emit(updateReq);
+
+      this.updateWord.emit({
+        wordId: this.word?.id,
+        word: raw.word,
+        meaning: raw.meaning,
+        context: raw.context
+      });
     }
     else {
-      this.createWord.emit(new CreateWordRequestDto(
-        raw.word,
-        raw.meaning,
-        raw.context,
-      ))
-    }
-    this.form.reset();
-    this.onClose();
+      this.createWord.emit(
+        {
+          word: raw.word,
+          meaning: raw.meaning,
+          context: raw.context,
+        }
+      )
+    };
   }
 }

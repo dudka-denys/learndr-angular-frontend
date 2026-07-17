@@ -1,5 +1,4 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { Component } from '@angular/core';
 import { VocabularyPage } from './features/vocabulary/components/vocabulary-page/vocabulary-page';
 
 @Component({

@@ -88,6 +88,8 @@ export class VocabularyPage implements OnInit {
           console.error(err);
         }
       });
+    this.selectedWord = null;
+    this.isWordFormModalOpen = false;
   }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ CREATE WORD ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH BUTTONS ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -136,6 +138,8 @@ export class VocabularyPage implements OnInit {
           console.error(err);
         }
       });
+    this.selectedWord = null;
+    this.isWordFormModalOpen = false;
   }
   // ~~~~~~~~~~~~~~~~~~~~~~~~ EDIT WORD WITH MODAL ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   // ~~~~~~~~~~~~~~~~~~~~~~~~ PAGINATION ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
